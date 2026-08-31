@@ -104,9 +104,7 @@ export default function SensaPage() {
         
         <SensaAbout t={t} lang={lang} />
         
-        <SensaFeatures t={t} />
-        <SensaAchievements t={t} />
-        
+        <SensaFeatures t={t} />        
         
         <SensaProducts
           t={t}
@@ -119,7 +117,6 @@ export default function SensaPage() {
           loading={loading}
         />
         <SensaTimeline t={t} />
-        
         
 
         <SensaContact t={t} lang={lang} />

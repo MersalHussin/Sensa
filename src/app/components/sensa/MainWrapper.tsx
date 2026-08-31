@@ -8,7 +8,7 @@ export default function MainWrapper({ children }: { children: ReactNode }) {
   const isAdmin = pathname?.startsWith('/admin');
   
   return (
-    <main className={`flex-grow ${isAdmin ? '' : 'pt-28'}`}>
+    <main className={`flex-grow ${isAdmin ? '' : ''}`}>
       {children}
     </main>
   );

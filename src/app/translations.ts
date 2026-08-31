@@ -2,9 +2,9 @@ export const translations: any = {
   en: {
     dir: "ltr",
     brandName: "Sensa",
-    heroTitle: "Premium Skincare & Beauty Solutions",
+    heroTitle: "Premium Hair Care & Beauty Solutions",
     heroSubtitle:
-      "Advanced skincare crafted with precision, safety and innovation to enhance natural beauty.",
+      "Advanced hair care crafted with precision, safety, and innovation for stronger, healthier hair.",
     heroCta: "Explore Services",
 
     whoTitle: "Who We Are",
@@ -136,9 +136,9 @@ export const translations: any = {
   ar: {
     dir: "rtl",
     brandName: "سينسا",
-    heroTitle: "حلول متقدمة للعناية بالبشرة والجمال",
+    heroTitle: "حلول متقدمة للعناية بالشعر وجماله",
     heroSubtitle:
-      "منتجات عناية متطورة تجمع بين الأمان والابتكار لتعزيز الجمال الطبيعي.",
+      "منتجات عناية متطورة تجمع بين الأمان والابتكار للحصول على شعر صحي وقوي.",
 
     heroCta: "استكشف الخدمات",
 
