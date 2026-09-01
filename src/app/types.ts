@@ -10,6 +10,10 @@ import {
   Rocket,
   Calendar,
   Heart,
+  Award,
+  Leaf,
+  FlaskConical,
+  Gem,
 } from "lucide-react";
 
 export const iconMap: Record<string, LucideIcon> = {
@@ -23,6 +27,10 @@ export const iconMap: Record<string, LucideIcon> = {
   Rocket,
   Calendar,
   Heart,
+  Award,
+  Leaf,
+  FlaskConical,
+  Gem,
 };
 
 export type Feature = {

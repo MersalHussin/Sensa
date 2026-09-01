@@ -8,38 +8,38 @@ export const translations: any = {
     heroCta: "Explore Services",
 
     whoTitle: "Who We Are",
-    whoText: `Sensa is a Saudi brand specializing in advanced skincare serums and creams. We are part of the Bonn Medical Industries ecosystem, operating under a license from Germany's KOLN Naturstoffe. We develop targeted formulations to address real skin concerns - not generic products, but precise solutions for every case. Each product is crafted with global medical standards, rigorous testing, and full transparency.`,
+    whoText: `Sensa is a Saudi brand specializing in advanced hair care products like shampoos, conditioners, and treatments. We are part of the Bonn Medical Industries ecosystem, operating under a license from Germany's KOLN Naturstoffe. We develop targeted formulations to address real hair and scalp concerns - not generic products, but precise solutions for every case. Each product is crafted with global medical standards, rigorous testing, and full transparency.`,
 
     featuresTitle: "Why Sensa",
     features: [
       {
         title: "Global Standards",
         desc: "Manufactured under strict international quality regulations.",
-        icon: "Globe",
+        icon: "Award",
       },
       {
         title: "Safe Formulas",
         desc: "Dermatologically tested and safe for daily use.",
-        icon: "ShieldCheck",
+        icon: "Leaf",
       },
       {
         title: "Advanced Science",
         desc: "Powered by modern cosmetic research and innovation.",
-        icon: "Sparkles",
+        icon: "FlaskConical",
       },
       {
         title: "Premium Quality",
         desc: "High-performance ingredients delivering real results.",
-        icon: "Star",
+        icon: "Gem",
       },
     ],
 
     categoriesTitle: "Product Lines",
     categories: [
-      "Face Care",
-      "Body Care",
-      "Sensitive Skin",
-      "Hair Care",
+      "Shampoos",
+      "Conditioners",
+      "Hair Masks",
+      "Scalp Care",
       "Daily Essentials",
     ],
 
@@ -84,7 +84,7 @@ export const translations: any = {
       {
         heading: "Individual Customers",
         items: [
-          "Free consultation to find the right product for your skin",
+          "Free consultation to find the right product for your hair",
           "Free samples to try before purchase",
           "Expert advice on proper usage",
           "Loyalty programs and special offers",
@@ -143,38 +143,38 @@ export const translations: any = {
     heroCta: "استكشف الخدمات",
 
     whoTitle: "من نحن",
-    whoText: `سينسا هي علامة تجارية سعودية متخصصة في تصنيع منتجات وسيرومات العناية المتقدمة بالبشرة والوجه. نحن جزء من منظومة مصنع بون للصناعات الطبية، وتعمل تحت ترخيص من ألمانيا KOLN Naturstoffe. متخصصون في تطوير تركيبات محددة لحل مشاكل البشرة الفعلية—لا منتجات عامة، بل حلول دقيقة لكل حالة. كل منتج مصنوع بمعايير طبية عالمية، مع اختبارات صارمة وشفافية كاملة.`,
+    whoText: `سينسا هي علامة تجارية سعودية متخصصة في تصنيع منتجات العناية المتقدمة بالشعر مثل الشامبو والبلسم ومعالجات الشعر. نحن جزء من منظومة مصنع بون للصناعات الطبية، وتعمل تحت ترخيص من ألمانيا KOLN Naturstoffe. متخصصون في تطوير تركيبات محددة لحل مشاكل الشعر والفروة الفعلية—لا منتجات عامة، بل حلول دقيقة لكل حالة. كل منتج مصنوع بمعايير طبية عالمية، مع اختبارات صارمة وشفافية كاملة.`,
 
     featuresTitle: "لماذا سينسا",
     features: [
       {
         title: "معايير عالمية",
         desc: "تصنيع وفق أعلى معايير الجودة العالمية.",
-        icon: "Globe",
+        icon: "Award",
       },
       {
         title: "تركيبات آمنة",
         desc: "مختبرة جلدياً وآمنة للاستخدام اليومي.",
-        icon: "ShieldCheck",
+        icon: "Leaf",
       },
       {
         title: "تقنيات متقدمة",
         desc: "تعتمد على أحدث أبحاث التجميل.",
-        icon: "Sparkles",
+        icon: "FlaskConical",
       },
       {
         title: "جودة فاخرة",
         desc: "مكونات عالية الأداء بنتائج حقيقية.",
-        icon: "Star",
+        icon: "Gem",
       },
     ],
 
     categoriesTitle: "خطوط المنتجات",
     categories: [
-      "العناية بالوجه",
-      "العناية بالجسم",
-      "البشرة الحساسة",
-      "العناية بالشعر",
+      "الشامبو",
+      "البلسم",
+      "ماسكات الشعر",
+      "العناية بالفروة",
       "العناية اليومية",
     ],
 
@@ -219,7 +219,7 @@ export const translations: any = {
       {
         heading: "للعملاء الأفراد",
         items: [
-          "استشارة مجانية حول منتج مناسب لبشرتك",
+          "استشارة مجانية حول منتج مناسب لشعرك",
           "عينات مجانية للتجربة قبل الشراء",
           "نصائح متخصصة حول كيفية الاستخدام الصحيح",
           "برامج ولاء وعروض خاصة",

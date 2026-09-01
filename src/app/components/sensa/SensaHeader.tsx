@@ -76,6 +76,7 @@ export default function SensaHeader() {
     { href: "/", label: isArabic ? "الرئيسية" : "Home" },
     { href: "/#who-we-are", label: isArabic ? "من نحن" : "Who We Are" },
     { href: "/#why-us", label: isArabic ? "لماذا نحن" : "Why Us" },
+    { href: "/#products", label: isArabic ? "المنتجات" : "Products" },
     { href: "/#product-journey", label: isArabic ? "رحلة المنتج" : "Product Journey" },
   ];
 
