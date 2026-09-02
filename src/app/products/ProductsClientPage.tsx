@@ -42,24 +42,24 @@ export default function ProductsClientPage({ initialProducts, query }: { initial
   };
 
   return (
-    <main dir={t.dir} className="min-h-screen bg-gradient-to-b from-white via-white to-[#D0DAD6]/20 pt-24">
+    <main dir={t.dir} className="min-h-screen bg-[#FAFAFA] pt-24">
       <SensaHeader />
       
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-8 relative z-20">
         <Link 
           href="/" 
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-main transition-colors font-medium text-sm mb-8"
+          className="inline-flex items-center gap-3 text-gray-400 hover:text-gray-900 transition-colors font-medium text-sm tracking-wider uppercase mb-8"
         >
-          {isArabic ? <ArrowRight size={16} /> : <ArrowLeft size={16} />}
+          {isArabic ? <ArrowRight size={16} className="text-main" /> : <ArrowLeft size={16} className="text-main" />}
           {isArabic ? "العودة للرئيسية" : "Back to Home"}
         </Link>
 
         {query && (
-          <div className="mb-8">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+          <div className="mb-8 border-b border-gray-200 pb-8">
+            <h1 className="text-3xl md:text-4xl font-light text-gray-900 tracking-wide uppercase">
               {isArabic ? `نتائج البحث عن: "${query}"` : `Search results for: "${query}"`}
             </h1>
-            <p className="text-gray-500 mt-2">
+            <p className="text-main mt-3 tracking-widest font-medium text-sm uppercase">
               {isArabic 
                 ? `تم العثور على ${initialProducts.length} منتجات` 
                 : `Found ${initialProducts.length} products`}
