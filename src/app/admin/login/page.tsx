@@ -18,6 +18,12 @@ export default function SensaLogin() {
     setLoading(true);
     setError('');
 
+    if (email.toLowerCase() !== 'sensa@admin.com') {
+      setError('هذا البريد غير مصرح له بالدخول كمسؤول');
+      setLoading(false);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -67,7 +73,7 @@ export default function SensaLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-4 pr-12 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-main focus:bg-white transition-all placeholder:text-gray-400 text-left"
-                placeholder="admin@sensa.com"
+                placeholder="sensa@admin.com"
                 dir="ltr"
               />
             </div>

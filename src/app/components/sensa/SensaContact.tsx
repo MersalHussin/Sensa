@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FaPhone, FaEnvelope, FaClock, FaCheckCircle, FaInstagram } from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelope, FaCheck } from "react-icons/fa";
 import { submitContactMessage } from "../../actions/contactActions";
 import { getSensaProducts } from "../../actions/sensaProductActions";
 import { Turnstile } from "@marsidev/react-turnstile";
@@ -62,12 +62,12 @@ export default function SensaContact({ t, lang }: { t: any; lang: string }) {
       return;
     
     if (submitCount >= 3) {
-      setSubmitError(lang === "ar" ? "لقد وصلت للحد الأقصى من الرسائل. يرجى تحديث الصفحة للمحاولة مرة أخرى." : "Maximum messages reached. Please refresh the page to try again.");
+      setSubmitError(lang === "ar" ? "لقد وصلت للحد الأقصى من المحاولات." : "Maximum attempts reached.");
       return;
     }
 
     if (!turnstileToken) {
-      setSubmitError(lang === "ar" ? "يرجى إكمال التحقق الأمني أولاً" : "Please complete the security check first");
+      setSubmitError(lang === "ar" ? "يرجى إكمال التحقق الأمني" : "Please complete the security check");
       return;
     }
 
@@ -91,190 +91,202 @@ export default function SensaContact({ t, lang }: { t: any; lang: string }) {
         if (turnstileRef.current) {
           turnstileRef.current.reset();
         }
-      }, 3500);
+      }, 4000);
     } else {
-      setSubmitError(lang === "ar" ? "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى." : "An error occurred. Please try again.");
+      setSubmitError(lang === "ar" ? "حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً." : "An error occurred. Please try again.");
     }
   };
 
+  const inputClass = "w-full py-4 bg-transparent border-b-2 border-gray-200 focus:border-main outline-none transition-colors text-gray-900 placeholder:text-gray-400 text-lg";
+
   return (
-    <section id="contact-us" className="py-24 bg-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-main/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+    <section id="contact-us" className="py-24 md:py-32 bg-[#F8F9F8] relative overflow-hidden">
+      {/* Subtle Background Accents */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-main/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-main/5 rounded-full blur-[100px] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Info Column */}
+        <div className="grid lg:grid-cols-12 gap-16 items-center">
+          
+          {/* Text & Contact Info Column (Left/Right depending on RTL) */}
           <motion.div
-            initial={{ opacity: 0, x: lang === "ar" ? 40 : -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
-            className="space-y-10"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5 space-y-12"
           >
             <div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+              <span className="text-main uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
+                {lang === "ar" ? "يسعدنا تواصلك" : "GET IN TOUCH"}
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 {lang === "ar" ? "تواصل معنا" : "Contact Us"}
               </h2>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-main to-[#D0DAD6] rounded-full mb-6" />
               <p className="text-gray-600 text-lg leading-relaxed font-medium">
                 {lang === "ar" 
-                  ? "نحن هنا لخدمتك! سواء كان لديك استفسار عن منتجاتنا، أو تحتاج إلى مساعدة، لا تتردد في التواصل معنا وسيقوم فريقنا بالرد عليك في أقرب وقت." 
-                  : "We are here to help! Whether you have a question about our products or need assistance, feel free to reach out and our team will get back to you shortly."}
+                  ? "نحن هنا لخدمتك بكل سرور. سواء كان لديك استفسار عن منتجاتنا الفاخرة، أو تحتاج إلى مساعدة خاصة، فريقنا مكرس لتقديم أفضل تجربة تليق بك." 
+                  : "We are here to serve you with pleasure. Whether you have an inquiry about our luxury products or need special assistance, our team is dedicated to providing you with the best experience."}
               </p>
             </div>
 
-            <div className="flex flex-col gap-6 pt-6 mt-8">
-              <a href="mailto:Relation@bonnmed.com" className="flex items-center gap-4 text-gray-700 hover:text-main transition-colors font-bold text-lg p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-main/10 flex items-center justify-center shrink-0">
-                  <FaEnvelope className="text-main text-xl" />
+            <div className="space-y-8 pt-4">
+              <a href="mailto:Relation@bonnmed.com" className="flex items-center gap-6 group">
+                <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-main group-hover:border-main transition-all duration-300">
+                  <FaEnvelope className="text-gray-400 group-hover:text-white transition-colors text-xl" />
                 </div>
-                Relation@bonnmed.com
+                <div>
+                  <p className="text-sm text-gray-400 font-medium mb-1 uppercase tracking-wider">{lang === "ar" ? "البريد الإلكتروني" : "Email"}</p>
+                  <p className="text-gray-900 font-bold text-xl group-hover:text-main transition-colors">Relation@bonnmed.com</p>
+                </div>
               </a>
-              <a href="tel:+966580347173" className="flex text-right items-center gap-4 text-gray-700 hover:text-main transition-colors font-bold text-lg p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-full  bg-main/10 flex items-center justify-center shrink-0">
-                  <FaPhone className="text-main text-xl" />
+              
+              <a href="tel:+966580347173" className="flex items-center gap-6 group">
+                <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-main group-hover:border-main transition-all duration-300">
+                  <FaPhoneAlt className="text-gray-400 group-hover:text-white transition-colors text-xl" />
                 </div>
-                <span dir="ltr">
-                +966 5803 47173
-                </span>
+                <div>
+                  <p className="text-sm text-gray-400 font-medium mb-1 uppercase tracking-wider">{lang === "ar" ? "رقم الهاتف" : "Phone"}</p>
+                  <p className="text-gray-900 font-bold text-xl group-hover:text-main transition-colors" dir="ltr">+966 5803 47173</p>
+                </div>
               </a>
             </div>
           </motion.div>
 
-          {/* Form Column */}
+          {/* High-Contrast Form Column */}
           <motion.div
-            initial={{ opacity: 0, x: lang === "ar" ? -40 : 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-7"
           >
-            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 relative">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">{t.contactForm.title}</h3>
-
+            <div className="bg-white p-10 md:p-14 rounded-[2rem] shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-gray-100">
+              
               {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center text-center py-12 space-y-4"
-                >
-                  <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-4">
-                    <FaCheckCircle className="text-green-500 text-4xl" />
+                <div className="flex flex-col items-center justify-center text-center py-16">
+                  <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
+                    <FaCheck className="text-green-500 text-3xl" />
                   </div>
-                  <h4 className="text-xl font-bold text-gray-900">
-                    {lang === "ar" ? "تم إرسال رسالتك بنجاح!" : "Message Sent Successfully!"}
+                  <h4 className="text-3xl font-bold text-gray-900 mb-4">
+                    {lang === "ar" ? "شكراً لتواصلك معنا" : "Thank you for reaching out"}
                   </h4>
-                  <p className="text-gray-500 font-medium">
-                    {lang === "ar" ? "سنتواصل معك في أقرب وقت ممكن." : "We will get back to you as soon as possible."}
+                  <p className="text-gray-600 text-lg">
+                    {lang === "ar" ? "لقد استلمنا رسالتك وسنقوم بالرد عليك قريباً." : "We have received your message and will reply shortly."}
                   </p>
-                </motion.div>
+                </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-8">
                   {submitError && (
-                    <div className="bg-red-50 text-red-500 p-4 rounded-xl text-sm font-bold border border-red-100">
+                    <div className="text-red-600 font-medium bg-red-50 p-4 rounded-xl border border-red-100 text-center">
                       {submitError}
                     </div>
                   )}
 
-                  <div className="space-y-3">
-                    <label className="text-sm font-bold text-gray-700">
-                      {lang === "ar" ? "نوع التواصل" : "Contact Type"}
-                    </label>
-                    <div className="grid grid-cols-2 gap-3 p-1.5 bg-gray-100/80 rounded-2xl">
-                      <button
-                        type="button"
-                        onClick={() => handleTypeChange('inquiry')}
-                        className={`py-3.5 px-4 rounded-xl  cursor-pointer font-bold transition-all ${formData.contact_type === 'inquiry' ? 'bg-white text-main shadow-md shadow-black/5 scale-[1.02]' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
-                      >
-                        {lang === "ar" ? "استفسار" : "Inquiry"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleTypeChange('wholesale')}
-                        className={`py-3.5 px-4 rounded-xl cursor-pointer font-bold transition-all ${formData.contact_type === 'wholesale' ? 'bg-white text-main shadow-md shadow-black/5 scale-[1.02]' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
-                      >
-                        {lang === "ar" ? "طلب جملة منتج" : "Wholesale Order"}
-                      </button>
-                    </div>
+                  {/* Type Selection */}
+                  <div className="flex gap-4 p-2 bg-gray-50 rounded-2xl border border-gray-100 mb-10">
+                    <button
+                      type="button"
+                      onClick={() => handleTypeChange("inquiry")}
+                      className={`flex-1 py-4 rounded-xl text-base font-bold transition-all ${
+                        formData.contact_type === "inquiry"
+                          ? "bg-white text-main shadow-sm border-gray-100"
+                          : "text-gray-500 hover:text-gray-900"
+                      }`}
+                    >
+                      {lang === "ar" ? "استفسار عام" : "General Inquiry"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleTypeChange("wholesale")}
+                      className={`flex-1 py-4 rounded-xl text-base font-bold transition-all ${
+                        formData.contact_type === "wholesale"
+                          ? "bg-white text-main shadow-sm border-gray-100"
+                          : "text-gray-500 hover:text-gray-900"
+                      }`}
+                    >
+                      {lang === "ar" ? "طلب جملة" : "Wholesale Order"}
+                    </button>
                   </div>
 
-                  {formData.contact_type === 'wholesale' && (
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">
-                        {lang === "ar" ? "اختر المنتج" : "Select Product"}
-                      </label>
+                  {/* Product Select (if wholesale) */}
+                  {formData.contact_type === "wholesale" && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="mb-8"
+                    >
                       <select
                         name="product_id"
                         value={formData.product_id}
                         onChange={handleChange}
-                        required={formData.contact_type === 'wholesale'}
-                        className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:border-main focus:ring-2 focus:ring-main/20 outline-none transition-all bg-gray-50/50 font-medium appearance-none"
+                        required
+                        className={inputClass + " appearance-none cursor-pointer"}
                       >
                         <option value="" disabled>
-                          {lang === "ar" ? "--- يرجى اختيار المنتج ---" : "--- Please select a product ---"}
+                          {lang === "ar" ? "اختر المنتج..." : "Select product..."}
                         </option>
-                        {products.map(p => (
+                        {products.map((p) => (
                           <option key={p.id} value={p.id}>
                             {lang === "ar" ? p.name_ar : p.name_en}
                           </option>
                         ))}
                       </select>
-                    </div>
+                    </motion.div>
                   )}
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-700">{t.contactForm.name}</label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder={t.contactForm.placeholder.name}
-                      className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:border-main focus:ring-2 focus:ring-main/20 outline-none transition-all bg-gray-50/50 font-medium"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">{t.contactForm.email}</label>
+                  {/* Inputs */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder={t.contactForm.name}
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
                       <input
                         type="email"
                         name="email"
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder={t.contactForm.placeholder.email}
-                        className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:border-main focus:ring-2 focus:ring-main/20 outline-none transition-all bg-gray-50/50 font-medium"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">{t.contactForm.phone}</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        required
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder={t.contactForm.placeholder.phone}
-                        className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:border-main focus:ring-2 focus:ring-main/20 outline-none transition-all bg-gray-50/50 font-medium text-left"
-                        dir="ltr"
+                        placeholder={t.contactForm.email}
+                        className={inputClass}
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-700">{t.contactForm.message}</label>
+                  <div>
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder={t.contactForm.phone}
+                      className={inputClass + " text-left"}
+                      dir="ltr"
+                    />
+                  </div>
+
+                  <div>
                     <textarea
                       name="message"
                       required
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder={t.contactForm.placeholder.message}
-                      rows={5}
-                      className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:border-main focus:ring-2 focus:ring-main/20 outline-none transition-all bg-gray-50/50 font-medium resize-none"
+                      placeholder={t.contactForm.message}
+                      rows={3}
+                      className={inputClass + " resize-none pt-4"}
                     ></textarea>
                   </div>
 
-                  <div className="flex flex-col items-center gap-2">
+                  <div className="flex flex-col items-center gap-6 pt-6">
                     <Turnstile
                       ref={turnstileRef}
                       siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
@@ -282,29 +294,19 @@ export default function SensaContact({ t, lang }: { t: any; lang: string }) {
                       onError={() => setTurnstileToken("")}
                       onExpire={() => setTurnstileToken("")}
                     />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-main text-white font-bold py-4 rounded-xl hover:bg-[#0a3a2a] transition-colors shadow-lg shadow-main/30 hover:shadow-main/50 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      t.contactForm.submit
-                    )}
-                  </button>
-                  <div className="text-center flex justify-center">
-
-                    <p className="text-xs text-gray-400 text-center max-w-sm mt-1">
-                      {lang === "ar" ? (
-                        <>هذا الموقع محمي بواسطة Cloudflare Turnstile وتطبق <a href="https://www.cloudflare.com/en-gb/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600 transition-colors">سياسة الخصوصية</a> الخاصة بهم.</>
+                    
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-gray-900 text-white hover:bg-main py-5 rounded-2xl text-xl font-bold transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(14,77,56,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
                       ) : (
-                        <>This site is protected by Cloudflare Turnstile and their <a href="https://www.cloudflare.com/en-gb/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600 transition-colors">Privacy Policy</a> applies.</>
+                        t.contactForm.submit
                       )}
-                    </p>
-                </div>
+                    </button>
+                  </div>
                 </form>
               )}
             </div>

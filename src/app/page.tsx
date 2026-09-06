@@ -36,7 +36,7 @@ export default function SensaPage() {
       
       try {
         const fetchPromise = supabase
-          .from("levisage_products")
+          .from("sensa_products")
           .select("*")
           .order('created_at', { ascending: false });
           

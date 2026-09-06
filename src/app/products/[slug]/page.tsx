@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   
   const { data: supabaseProduct } = await supabaseServer
-    .from("levisage_products")
+    .from("sensa_products")
     .select("*")
     .eq("slug", slug)
     .single();
@@ -36,14 +36,14 @@ export default async function SensaProductPage({ params }: { params: Promise<{ s
   
   // Try fetching from Supabase first
   const { data: supabaseProduct, error } = await supabaseServer
-    .from("levisage_products")
+    .from("sensa_products")
     .select("*")
     .eq("slug", slug)
     .single();
 
   // Fetch related products (excluding the current one)
   const { data: relatedSupabaseProducts } = await supabaseServer
-    .from("levisage_products")
+    .from("sensa_products")
     .select("*")
     .neq("slug", slug)
     .limit(4);

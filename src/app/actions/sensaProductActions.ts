@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 export async function getSensaProducts() {
   try {
     const { data, error } = await supabaseServer
-      .from('levisage_products')
+      .from('sensa_products')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -21,7 +21,7 @@ export async function getSensaProducts() {
 export async function getSensaProduct(id: string) {
   try {
     const { data, error } = await supabaseServer
-      .from('levisage_products')
+      .from('sensa_products')
       .select('*')
       .eq('id', id)
       .single();
@@ -37,7 +37,7 @@ export async function getSensaProduct(id: string) {
 export async function addSensaProduct(data: any) {
   try {
     const { data: product, error } = await supabaseServer
-      .from('levisage_products')
+      .from('sensa_products')
       .insert([data])
       .select()
       .single();
@@ -56,7 +56,7 @@ export async function addSensaProduct(data: any) {
 export async function updateSensaProduct(id: string, data: any) {
   try {
     const { data: product, error } = await supabaseServer
-      .from('levisage_products')
+      .from('sensa_products')
       .update(data)
       .eq('id', id)
       .select()
@@ -76,7 +76,7 @@ export async function updateSensaProduct(id: string, data: any) {
 export async function deleteSensaProduct(id: string) {
   try {
     const { error } = await supabaseServer
-      .from('levisage_products')
+      .from('sensa_products')
       .delete()
       .eq('id', id);
 
@@ -96,7 +96,7 @@ export async function searchSensaProducts(query: string, limit: number = 5) {
     const normalizedQuery = query.replace(/[أإآا]/g, '_');
     
     let dbQuery = supabaseServer
-      .from('levisage_products')
+      .from('sensa_products')
       .select('id, name_en, name_ar, slug, images, description_en, description_ar, best_selling')
       .or(`name_en.ilike.%${normalizedQuery}%,name_ar.ilike.%${normalizedQuery}%,description_en.ilike.%${normalizedQuery}%,description_ar.ilike.%${normalizedQuery}%`);
       
