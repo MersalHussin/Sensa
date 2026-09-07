@@ -25,7 +25,7 @@ export async function submitContactMessage(data: any, turnstileToken?: string) {
     }
 
     const { data: message, error } = await supabaseServer
-      .from('contact_messages')
+      .from('contact_messages_sensa')
       .insert([data])
       .select()
       .single();
@@ -41,7 +41,7 @@ export async function submitContactMessage(data: any, turnstileToken?: string) {
 export async function getContactMessages() {
   try {
     const { data, error } = await supabaseServer
-      .from('contact_messages')
+      .from('contact_messages_sensa')
       .select('*')
       .order('created_at', { ascending: false });
 

@@ -156,7 +156,7 @@ export default function ProductClient({ product, relatedProducts = [], initialRe
               </div>
             )}
 
-            {(isArabic ? product.ingredients_ar : product.ingredients_en) && (
+            {((isArabic ? product.ingredients_ar : product.ingredients_en)?.length > 0) && (
               <div>
                 <h3 className="text-xs font-bold tracking-wider uppercase text-gray-900 mb-4">
                   {isArabic ? "المكونات الرئيسية" : "Key Ingredients"}
