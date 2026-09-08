@@ -25,7 +25,7 @@ export async function submitReview(data: any, turnstileToken?: string) {
     }
 
     const { data: review, error } = await supabaseServer
-      .from('product_reviews')
+      .from('product_reviews_sensa')
       .insert([
         {
           ...data,
@@ -49,7 +49,7 @@ export async function submitReview(data: any, turnstileToken?: string) {
 export async function getAcceptedReviews(productId: string) {
   try {
     const { data, error } = await supabaseServer
-      .from('product_reviews')
+      .from('product_reviews_sensa')
       .select('*')
       .eq('product_id', productId)
       .eq('status', 'accepted')
@@ -66,7 +66,7 @@ export async function getAcceptedReviews(productId: string) {
 export async function getAllReviews() {
   try {
     const { data, error } = await supabaseServer
-      .from('product_reviews')
+      .from('product_reviews_sensa')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -81,7 +81,7 @@ export async function getAllReviews() {
 export async function updateReviewStatus(id: string, status: 'accepted' | 'rejected' | 'paused' | 'pending') {
   try {
     const { data: review, error } = await supabaseServer
-      .from('product_reviews')
+      .from('product_reviews_sensa')
       .update({ status })
       .eq('id', id)
       .select()

@@ -287,14 +287,16 @@ export default function SensaContact({ t, lang }: { t: any; lang: string }) {
                   </div>
 
                   <div className="flex flex-col items-center gap-6 pt-6">
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                      onSuccess={(token) => setTurnstileToken(token)}
-                      onError={() => setTurnstileToken("")}
-                      onExpire={() => setTurnstileToken("")}
-                    />
-                    
+                    <div className="flex flex-col items-center gap-2 w-full">
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                        onSuccess={(token) => setTurnstileToken(token)}
+                        onError={() => setTurnstileToken("")}
+                        onExpire={() => setTurnstileToken("")}
+                      />
+                
+                    </div>
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -306,6 +308,17 @@ export default function SensaContact({ t, lang }: { t: any; lang: string }) {
                         t.contactForm.submit
                       )}
                     </button>
+                      <p className="text-[11px] text-gray-400 text-center px-4 leading-relaxed">
+                        {lang === "ar" ? (
+                          <>
+                            هذا الموقع محمي بواسطة Cloudflare Turnstile وتطبق <a href="https://www.cloudflare.com/en-gb/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600 transition-colors">سياسة الخصوصية</a> الخاصة بهم.
+                          </>
+                        ) : (
+                          <>
+                            This site is protected by Cloudflare Turnstile and their <a href="https://www.cloudflare.com/en-gb/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600 transition-colors">Privacy Policy</a> applies.
+                          </>
+                        )}
+                      </p>
                   </div>
                 </form>
               )}

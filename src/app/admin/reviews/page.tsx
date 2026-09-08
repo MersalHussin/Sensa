@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getAllReviews, updateReviewStatus } from '@/app/actions/reviewActions';
-import { Star, MessageSquare, CheckCircle, XCircle, PauseCircle, Clock, X } from 'lucide-react';
+import { Star, Check, X, Clock, Pause, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AdminReviewsPage() {
@@ -35,7 +35,6 @@ export default function AdminReviewsPage() {
     try {
       const res = await updateReviewStatus(id, newStatus);
       if (res.success) {
-        // Update local state
         setReviews(reviews.map(r => r.id === id ? { ...r, status: newStatus } : r));
       } else {
         alert(res.error || 'فشل في تحديث حالة التقييم');
@@ -47,93 +46,89 @@ export default function AdminReviewsPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" dir="rtl">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-100 border-t-main"></div>
-        <p className="text-gray-500 font-medium">جاري تحميل التقييمات...</p>
-      </div>
-    );
-  }
-
   const getStatusBadge = (status: string) => {
     switch(status) {
       case 'accepted':
-        return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 w-fit"><CheckCircle size={14} /> مقبول</span>;
+        return <span className="text-[10px] uppercase tracking-widest font-bold text-[#2A3B32] border border-[#2A3B32]/30 px-2 py-1 rounded bg-[#FDFBF7] w-fit flex items-center gap-1"><Check size={12} /> مقبول</span>;
       case 'rejected':
-        return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 w-fit"><XCircle size={14} /> مرفوض</span>;
+        return <span className="text-[10px] uppercase tracking-widest font-bold text-[#B44C4C] border border-[#B44C4C]/30 px-2 py-1 rounded bg-white w-fit flex items-center gap-1"><X size={12} /> مرفوض</span>;
       case 'paused':
-        return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700 w-fit"><PauseCircle size={14} /> متوقف</span>;
+        return <span className="text-[10px] uppercase tracking-widest font-bold text-[#C5A059] border border-[#C5A059]/30 px-2 py-1 rounded bg-[#FDFBF7] w-fit flex items-center gap-1"><Pause size={12} /> متوقف</span>;
       default:
-        return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 w-fit"><Clock size={14} /> قيد المراجعة</span>;
+        return <span className="text-[10px] uppercase tracking-widest font-bold text-[#8C8374] border border-[#E8E2D9] px-2 py-1 rounded bg-white w-fit flex items-center gap-1"><Clock size={12} /> قيد المراجعة</span>;
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-8 min-h-[80vh]" dir="rtl">
+    <div className="max-w-7xl mx-auto space-y-8 p-6 md:p-10 min-h-screen" dir="rtl">
       
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-main to-[#D0DAD6] rounded-r-3xl"></div>
+      {/* Luxury Header */}
+      <div className="relative overflow-hidden rounded-[1.5rem] bg-white border border-[#E8E2D9] shadow-[0_8px_30px_rgba(197,160,89,0.06)] p-8 md:p-10 z-10">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#C5A059]/10 to-transparent rounded-full blur-2xl opacity-60 -mr-10 -mt-10 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-main/5 to-transparent rounded-full blur-3xl opacity-70 -ml-10 -mb-10 pointer-events-none"></div>
         
-        <div className="flex items-center gap-4">
-          <div className="bg-main/10 p-4 rounded-2xl text-main hidden sm:flex items-center justify-center">
-            <Star size={32} />
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-6 relative z-10">
+          <div className="flex items-center gap-5">
+            <div className="bg-[#FDFBF7] border border-[#E8E2D9] p-4 rounded-2xl text-[#C5A059] shadow-sm">
+              <Star size={32} strokeWidth={1.5} />
+            </div>
+            <div>
+              <p className="text-[11px] font-bold text-[#C5A059] uppercase tracking-[0.2em] mb-1.5">Customer Feedback</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-[#2A3B32] tracking-tight">التقييمات</h1>
+            </div>
           </div>
-          <div>
-            <h1 className="text-3xl font-extrabold text-gray-900">تقييمات المنتجات</h1>
-            <p className="text-gray-500 mt-1 font-medium">إدارة آراء وتقييمات العملاء</p>
+          <div className="bg-[#FDFBF7] border border-[#E8E2D9] px-6 py-3.5 rounded-xl shadow-sm text-center">
+            <span className="block text-2xl font-bold text-[#2A3B32]">{reviews.length}</span>
+            <span className="block text-[10px] uppercase tracking-widest text-[#8C8374] font-bold mt-1">إجمالي التقييمات</span>
           </div>
-        </div>
-        
-        <div className="bg-gray-50 px-5 py-3 rounded-xl border border-gray-100 flex flex-col items-center">
-          <span className="text-3xl font-black text-main">{reviews.length}</span>
-          <span className="text-xs font-bold text-gray-500">إجمالي التقييمات</span>
         </div>
       </div>
 
-      {error ? (
-        <div className="bg-red-50 text-red-500 p-6 rounded-2xl border border-red-100 font-medium text-center">
-          {error}
-        </div>
-      ) : reviews.length === 0 ? (
-        <div className="bg-white p-12 rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 text-center flex flex-col items-center justify-center">
-          <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6">
-            <Star className="text-gray-300" size={48} />
+      {/* Main Content */}
+      <div className="bg-white rounded-[1.5rem] shadow-[0_8px_30px_rgba(197,160,89,0.06)] border border-[#E8E2D9] overflow-hidden">
+        {loading ? (
+          <div className="py-32 flex flex-col items-center justify-center gap-4">
+            <div className="animate-spin h-8 w-8 border-2 border-[#E8E2D9] border-t-[#C5A059] rounded-full"></div>
+            <p className="text-[#8C8374] text-xs font-bold uppercase tracking-widest">جاري التحميل</p>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">لا توجد تقييمات بعد</h3>
-          <p className="text-gray-500">لم يقم أي عميل بإضافة تقييم حتى الآن.</p>
-        </div>
-      ) : (
-        <div className="bg-white rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden">
+        ) : error ? (
+          <div className="py-24 text-center">
+            <p className="text-[#B44C4C] font-bold">{error}</p>
+          </div>
+        ) : reviews.length === 0 ? (
+          <div className="py-32 text-center bg-white flex flex-col items-center">
+            <MessageSquare size={48} className="text-[#E8E2D9] mb-4" strokeWidth={1} />
+            <p className="text-[#8C8374] font-bold text-lg">لا توجد تقييمات حالياً</p>
+          </div>
+        ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-right border-collapse">
+            <table className="w-full text-right text-[#2A3B32] border-collapse">
               <thead>
-                <tr className="bg-gray-50/80 border-b border-gray-100 text-gray-500 text-sm">
-                  <th className="py-4 px-6 font-bold w-[200px]">الاسم / المنتج</th>
-                  <th className="py-4 px-6 font-bold w-[120px]">التقييم</th>
-                  <th className="py-4 px-6 font-bold w-[120px]">الحالة</th>
-                  <th className="py-4 px-6 font-bold">الرأي</th>
-                  <th className="py-4 px-6 font-bold w-[200px]">إجراءات</th>
+                <tr className="bg-[#FDFBF7] border-b border-[#E8E2D9]">
+                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[200px]">العميل / التاريخ</th>
+                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[120px]">التقييم</th>
+                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[120px]">الحالة</th>
+                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الرأي</th>
+                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider text-left w-[200px]">الإجراءات</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#E8E2D9]">
                 {reviews.map((review) => (
-                  <tr key={review.id} className={`transition-colors group align-top ${updatingId === review.id ? 'opacity-50 pointer-events-none' : 'hover:bg-gray-50/50'}`}>
+                  <tr key={review.id} className={`hover:bg-[#FDFBF7]/60 transition-colors group align-top ${updatingId === review.id ? 'opacity-50 pointer-events-none' : ''}`}>
                     <td className="py-5 px-6">
-                      <div className="font-bold text-gray-900 mb-1">{review.name}</div>
-                      <Link href={`/products/${review.product_id}`} target="_blank" className="text-xs font-bold text-main hover:underline bg-main/5 px-2 py-1 rounded w-fit inline-block mb-1">
-                        المنتج: {review.product_id}
+                      <div className="font-bold text-sm text-[#2A3B32] mb-1.5">{review.name}</div>
+                      <Link href={`/products/${review.product_id}`} target="_blank" className="text-[10px] font-bold text-[#C5A059] hover:text-main uppercase tracking-widest border-b border-transparent hover:border-[#C5A059] transition-colors block mb-2 w-fit">
+                        المنتج: {review.product_id.substring(0, 8)}...
                       </Link>
-                      <div className="text-xs font-medium text-gray-500 block">
-                        {new Date(review.created_at).toLocaleDateString('ar-EG')}
+                      <div className="text-[10px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-white w-fit" dir="ltr">
+                        {new Date(review.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </div>
                     </td>
                     
                     <td className="py-5 px-6">
-                      <div className="flex gap-1 text-yellow-400">
+                      <div className="flex gap-1 text-[#C5A059]">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={16} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-gray-300" : ""} />
+                          <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-[#E8E2D9]" : ""} />
                         ))}
                       </div>
                     </td>
@@ -143,34 +138,35 @@ export default function AdminReviewsPage() {
                     </td>
                     
                     <td className="py-5 px-6">
-                      <div className="text-sm text-gray-700 leading-relaxed font-medium bg-gray-50 p-4 rounded-2xl border border-gray-100 max-h-[100px] overflow-y-auto">
+                      <div className="text-xs text-[#5C6B61] leading-relaxed bg-[#FDFBF7] p-3 rounded-xl border border-[#E8E2D9] max-h-[100px] overflow-y-auto">
                         {review.comment}
                       </div>
                     </td>
-                    <td className="py-5 px-6">
-                      <div className="flex flex-col gap-2">
+                    
+                    <td className="py-5 px-6 text-left">
+                      <div className="flex flex-col gap-2 opacity-80 group-hover:opacity-100 transition-opacity items-end">
                         {review.status !== 'accepted' && (
                           <button 
                             onClick={() => handleUpdateStatus(review.id, 'accepted')}
-                            className="bg-green-50 text-green-600 hover:bg-green-100 border border-green-200 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1"
+                            className="text-[10px] font-bold text-main uppercase tracking-widest border border-main hover:bg-main hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
                           >
-                            <CheckCircle size={14} /> قبول
+                            <Check size={12} /> قبول
                           </button>
                         )}
                         {review.status !== 'rejected' && (
                           <button 
                             onClick={() => handleUpdateStatus(review.id, 'rejected')}
-                            className="bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1"
+                            className="text-[10px] font-bold text-[#B44C4C] uppercase tracking-widest border border-[#B44C4C] hover:bg-[#B44C4C] hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
                           >
-                            <XCircle size={14} /> رفض
+                            <X size={12} /> رفض
                           </button>
                         )}
                         {review.status !== 'paused' && review.status === 'accepted' && (
                           <button 
                             onClick={() => handleUpdateStatus(review.id, 'paused')}
-                            className="bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1"
+                            className="text-[10px] font-bold text-[#C5A059] uppercase tracking-widest border border-[#C5A059] hover:bg-[#C5A059] hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
                           >
-                            <PauseCircle size={14} /> إيقاف مؤقت
+                            <Pause size={12} /> إيقاف
                           </button>
                         )}
                       </div>
@@ -180,8 +176,8 @@ export default function AdminReviewsPage() {
               </tbody>
             </table>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
