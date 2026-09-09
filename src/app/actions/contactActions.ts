@@ -52,3 +52,18 @@ export async function getContactMessages() {
     return { success: false, error: error.message };
   }
 }
+
+export async function deleteContactMessage(id: string | number) {
+  try {
+    const { error } = await supabaseServer
+      .from('contact_messages_sensa')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
+    
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}

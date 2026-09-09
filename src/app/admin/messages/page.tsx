@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getContactMessages } from '@/app/actions/contactActions';
-import { MessageSquare, Package, Inbox, X, Mail, Phone } from 'lucide-react';
+import { getContactMessages, deleteContactMessage } from '@/app/actions/contactActions';
+import { MessageSquare, Package, Inbox, X, Mail, Phone, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AdminMessagesPage() {
@@ -10,6 +10,26 @@ export default function AdminMessagesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedMessage, setSelectedMessage] = useState<any>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async (id: string | number) => {
+    if (!confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
+    
+    setIsDeleting(true);
+    try {
+      const res = await deleteContactMessage(id);
+      if (res.success) {
+        setMessages(messages.filter((msg) => msg.id !== id));
+        setSelectedMessage(null);
+      } else {
+        alert(res.error || 'فشل في حذف الرسالة');
+      }
+    } catch (err: any) {
+      alert(err.message || 'خطأ غير متوقع');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -158,12 +178,22 @@ export default function AdminMessagesPage() {
                 )}
                 تفاصيل الرسالة
               </h2>
-              <button 
-                onClick={() => setSelectedMessage(null)}
-                className="text-[#8C8374] hover:text-[#B44C4C] transition-colors bg-white w-8 h-8 rounded-full border border-[#E8E2D9] flex items-center justify-center shadow-sm"
-              >
-                <X size={18} strokeWidth={2} />
-              </button>
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => handleDelete(selectedMessage.id)}
+                  disabled={isDeleting}
+                  title="حذف الرسالة"
+                  className="text-[#8C8374] hover:text-white hover:bg-[#B44C4C] transition-colors bg-white w-8 h-8 rounded-full border border-[#E8E2D9] flex items-center justify-center shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Trash2 size={16} strokeWidth={2} />
+                </button>
+                <button 
+                  onClick={() => setSelectedMessage(null)}
+                  className="text-[#8C8374] hover:text-[#B44C4C] transition-colors bg-white w-8 h-8 rounded-full border border-[#E8E2D9] flex items-center justify-center shadow-sm"
+                >
+                  <X size={18} strokeWidth={2} />
+                </button>
+              </div>
             </div>
             
             <div className="p-8 space-y-8">
