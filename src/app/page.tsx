@@ -11,14 +11,14 @@ import { translations } from "./translations";
 import { Product } from "./types";
 
 // Extracted Sections
-import SensaHero from "./components/sensa/SensaHero";
-import SensaAbout from "./components/sensa/SensaAbout";
-import SensaFeatures from "./components/sensa/SensaFeatures";
-import SensaCategories from "./components/sensa/SensaCategories";
-import SensaAchievements from "./components/sensa/SensaAchievements";
-import SensaTimeline from "./components/sensa/SensaTimeline";
-import SensaProducts from "./components/sensa/SensaProducts";
-import SensaContact from "./components/sensa/SensaContact";
+import Hero from "./components/sections/Hero";
+import About from "./components/sections/About";
+import Features from "./components/sections/Features";
+import Categories from "./components/sections/Categories";
+import Achievements from "./components/sections/Achievements";
+import Timeline from "./components/sections/Timeline";
+import Products from "./components/sections/Products";
+import Contact from "./components/sections/Contact";
 import { mockProducts } from "./products/data";
 
 export default function SensaPage() {
@@ -100,13 +100,13 @@ export default function SensaPage() {
   return (
     <>
       <main dir={t.dir} className="min-h-screen bg-gradient-to-b from-white via-white to-[#D0DAD6]/20">
-        <SensaHero t={t} lang={lang} />
+        <Hero t={t} lang={lang} />
         
-        <SensaAbout t={t} lang={lang} />
+        <About t={t} lang={lang} />
         
-        <SensaFeatures t={t} />        
+        <Features t={t} />        
         
-        <SensaProducts
+        <Products
           t={t}
           lang={lang}
           isArabic={isArabic}
@@ -116,10 +116,10 @@ export default function SensaPage() {
           fadeUp={fadeUp}
           loading={loading}
         />
-        <SensaTimeline t={t} />
+        <Timeline t={t} />
         
 
-        <SensaContact t={t} lang={lang} />
+        <Contact t={t} lang={lang} />
       </main>
     </>
   );

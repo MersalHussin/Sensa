@@ -50,7 +50,7 @@ function NumberBox({ value, label, delay = 0, icon: Icon }: NumberBoxProps) {
   );
 }
 
-export default function SensaAchievements({ t }: { t: any }) {
+export default function Achievements({ t }: { t: any }) {
   return (
     <section id="achievements" className="py-24 bg-main relative overflow-hidden bg-fixed bg-cover bg-center bg-no-repeat bg-opacity-60" style={{ backgroundImage: "url('/images/visageProducts.png')" }}>
          <div className="absolute inset-0 bg-main/90 " />

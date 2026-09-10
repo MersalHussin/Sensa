@@ -5,7 +5,7 @@ import { submitContactMessage } from "../../actions/contactActions";
 import { getSensaProducts } from "../../actions/sensaProductActions";
 import { Turnstile } from "@marsidev/react-turnstile";
 
-export default function SensaContact({ t, lang }: { t: any; lang: string }) {
+export default function Contact({ t, lang }: { t: any; lang: string }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",

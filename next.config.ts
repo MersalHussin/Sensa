@@ -13,9 +13,19 @@ const nextConfig: NextConfig = {
         hostname: 'i.suar.me',
         pathname: '/**',
       },
+                {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+        pathname: '/**',
+      },
       {
         protocol: 'https',
         hostname: 'eemqlrorjawsoeqlyaeu.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dzcjytvljevodxezgquy.supabase.co',
         pathname: '/storage/v1/object/public/**',
       },
       {

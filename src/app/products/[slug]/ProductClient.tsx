@@ -314,7 +314,7 @@ export default function ProductClient({ product, relatedProducts = [], initialRe
             </h2>
             <div className="w-16 h-[1px] bg-main mx-auto" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             {relatedProducts.map((p) => (
               <div
                 key={p.id || p.slug}

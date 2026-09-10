@@ -8,7 +8,7 @@ import { MapPin, Mail, Phone } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-export default function SensaFooter() {
+export default function Footer() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
   const pathname = usePathname();

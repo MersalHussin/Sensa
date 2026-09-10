@@ -11,7 +11,7 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 import ProductSearch from "./ProductSearch";
 
-export default function SensaHeader() {
+export default function Header() {
   const { t, i18n: i18nInstance } = useTranslation();
   const isArabic = i18nInstance.language === "ar";
   const [langOpen, setLangOpen] = useState(false);

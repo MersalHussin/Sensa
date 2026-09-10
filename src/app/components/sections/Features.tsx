@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { iconMap, Feature } from "../../types";
 import { Globe } from "lucide-react";
 
-export default function SensaFeatures({ t }: { t: any }) {
+export default function Features({ t }: { t: any }) {
   return (
     <section id="why-us" className="py-24 relative overflow-hidden bg-[#FAFAFA]">
       {/* Decorative background shapes */}

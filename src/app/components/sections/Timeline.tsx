@@ -9,7 +9,7 @@ import {
   Globe,
 } from "lucide-react";
 
-export default function SensaTimeline({ t }: { t: any }) {
+export default function Timeline({ t }: { t: any }) {
   const isArabic = t.dir === "rtl" || t.timelineTitle === "رحلة المنتج" || t.timelineTitle?.match(/[\u0600-\u06FF]/);
 
   return (

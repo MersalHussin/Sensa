@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Smile, Droplets, Feather, Flower2, Sun, Layers } from "lucide-react";
 
-export default function SensaCategories({ t }: { t: any }) {
+export default function Categories({ t }: { t: any }) {
   return (
     <section id="product-lines" className="py-24 bg-white relative">
       <div className="absolute top-0 right-0 w-96 h-96 bg-main/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 
-export default function SensaHero({ t, lang }: { t: any; lang: string }) {
+export default function Hero({ t, lang }: { t: any; lang: string }) {
   const isArabic = lang === "ar";
 
   return (
@@ -75,7 +75,7 @@ export default function SensaHero({ t, lang }: { t: any; lang: string }) {
           initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="relative h-[450px] md:h-[600px] w-full flex justify-center items-center lg:mt-0 mt-8"
+          className="relative h-[450px] md:h-[600px] w-full hidden lg:flex justify-center items-center lg:mt-0 mt-8"
         >
           {/* Luxury Frame */}
           <div className="relative w-full max-w-[500px] h-full p-4 rounded-[2.5rem] border border-gray-200 bg-white/40 backdrop-blur-md group shadow-xl">

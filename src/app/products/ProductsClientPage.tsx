@@ -4,9 +4,9 @@ import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { translations } from "../translations";
 import { Product } from "../types";
-import SensaProducts from "../components/sensa/SensaProducts";
-import SensaHeader from "../components/sensa/SensaHeader";
-import SensaContact from "../components/sensa/SensaContact";
+import Products from "../components/sections/Products";
+import Header from "../components/sections/Header";
+import Contact from "../components/sections/Contact";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -43,7 +43,7 @@ export default function ProductsClientPage({ initialProducts, query }: { initial
 
   return (
     <main dir={t.dir} className="min-h-screen bg-[#FAFAFA] pt-24">
-      <SensaHeader />
+      <Header />
       
       <div className="max-w-7xl mx-auto px-6 py-8 relative z-20">
         <Link 
@@ -68,7 +68,7 @@ export default function ProductsClientPage({ initialProducts, query }: { initial
         )}
       </div>
 
-      <SensaProducts
+      <Products
         t={t}
         lang={lang}
         isArabic={isArabic}
@@ -79,7 +79,7 @@ export default function ProductsClientPage({ initialProducts, query }: { initial
         loading={false}
       />
       
-      <SensaContact t={t} lang={lang} />
+      <Contact t={t} lang={lang} />
     </main>
   );
 }

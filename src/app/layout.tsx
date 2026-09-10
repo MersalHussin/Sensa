@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import './globals.css';
-import SensaHeader from './components/sensa/SensaHeader';
-import SensaFooter from './components/sensa/SensaFooter';
-import MainWrapper from './components/sensa/MainWrapper';
+import Header from './components/sections/Header';
+import Footer from './components/sections/Footer';
+import MainWrapper from './components/sections/MainWrapper';
 import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
@@ -38,11 +38,11 @@ export default async function RootLayout({
   return (
     <html lang={lang} dir={dir} className="scroll-smooth">
       <body className="font-sans antialiased overflow-x-hidden flex flex-col min-h-screen">
-        <SensaHeader />
+        <Header />
         <MainWrapper>
           {children}
         </MainWrapper>
-        <SensaFooter />
+        <Footer />
         <Toaster position="top-right" richColors />
       </body>
     </html>
