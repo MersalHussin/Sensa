@@ -122,82 +122,146 @@ export default function AdminProductsPage() {
             <p className="text-[#8C8374] font-bold text-lg">لا توجد منتجات حالياً</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-right text-[#2A3B32] border-collapse">
-              <thead>
-                <tr className="bg-[#FDFBF7] border-b border-[#E8E2D9]">
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[350px]">المنتج</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الاسم بالإنجليزي</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الحجم</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الحالة</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider text-left">الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E8E2D9]">
-                {products.map((product: any) => (
-                  <tr key={product.id} className="hover:bg-[#FDFBF7]/60 transition-colors group">
-                    <td className="py-5 px-6">
-                      <div className="flex items-center gap-5">
-                        <div className="relative w-14 h-16 bg-[#FDFBF7] rounded-xl overflow-hidden flex-shrink-0 border border-[#E8E2D9]">
-                          {product.images && product.images[0] ? (
-                            <Image 
-                              src={product.images[0]} 
-                              alt={product.name_ar} 
-                              fill 
-                              className="object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-[#D6D0C4]">
-                              <Box size={20} strokeWidth={1.5} />
-                            </div>
-                          )}
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-right text-[#2A3B32] border-collapse">
+                <thead>
+                  <tr className="bg-[#FDFBF7] border-b border-[#E8E2D9]">
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[350px]">المنتج</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الاسم بالإنجليزي</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الحجم</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الحالة</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider text-left">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E8E2D9]">
+                  {products.map((product: any) => (
+                    <tr key={product.id} className="hover:bg-[#FDFBF7]/60 transition-colors group">
+                      <td className="py-5 px-6">
+                        <div className="flex items-center gap-5">
+                          <div className="relative w-14 h-16 bg-[#FDFBF7] rounded-xl overflow-hidden flex-shrink-0 border border-[#E8E2D9]">
+                            {product.images && product.images[0] ? (
+                              <Image 
+                                src={product.images[0]} 
+                                alt={product.name_ar} 
+                                fill 
+                                className="object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex flex-col items-center justify-center text-[#D6D0C4]">
+                                <Box size={20} strokeWidth={1.5} />
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <span className="font-bold text-sm text-[#2A3B32] block mb-1.5">{product.name_ar}</span>
+                            {product.category && product.category.length > 0 && (
+                              <span className="text-[10px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-white">
+                                {product.category[0]}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <div>
-                          <span className="font-bold text-sm text-[#2A3B32] block mb-1.5">{product.name_ar}</span>
-                          {product.category && product.category.length > 0 && (
-                            <span className="text-[10px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-white">
-                              {product.category[0]}
-                            </span>
-                          )}
+                      </td>
+                      <td className="py-5 px-6 font-semibold text-sm text-[#5C6B61]" dir="ltr">{product.name_en || '-'}</td>
+                      <td className="py-5 px-6">
+                        <span className="bg-[#FDFBF7] text-[#5C6B61] border border-[#E8E2D9] px-3 py-1 rounded-lg text-xs font-bold inline-block" dir="ltr">
+                          {product.volume || '-'}
+                        </span>
+                      </td>
+                      <td className="py-5 px-6">
+                        {product.best_selling ? (
+                          <div className="flex items-center gap-1.5 text-[#B8860B] bg-[#FDFBF7] border border-[#C5A059]/30 px-3 py-1.5 rounded-lg text-xs font-bold w-fit">
+                            <Star size={14} className="fill-[#C5A059] text-[#C5A059]" />
+                            <span>أكثر مبيعاً</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1.5 text-[#8C8374] bg-[#FDFBF7] border border-[#E8E2D9] px-3 py-1.5 rounded-lg text-xs font-bold w-fit">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#D6D0C4]"></div>
+                            <span>عادي</span>
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-5 px-6 text-left">
+                        <div className="flex items-center justify-end gap-3 opacity-70 group-hover:opacity-100 transition-opacity">
+                          <Link 
+                            href={`/admin/products/${product.id}/edit`}
+                            className="flex items-center justify-center w-9 h-9 bg-white border border-[#E8E2D9] text-[#5C6B61] hover:text-main hover:border-main hover:bg-[#FDFBF7] rounded-lg transition-all shadow-sm"
+                            title="تعديل"
+                          >
+                            <Edit size={16} strokeWidth={2} />
+                          </Link>
+                          <DeleteButton id={product.id} />
                         </div>
-                      </div>
-                    </td>
-                    <td className="py-5 px-6 font-semibold text-sm text-[#5C6B61]" dir="ltr">{product.name_en || '-'}</td>
-                    <td className="py-5 px-6">
-                      <span className="bg-[#FDFBF7] text-[#5C6B61] border border-[#E8E2D9] px-3 py-1 rounded-lg text-xs font-bold inline-block" dir="ltr">
-                        {product.volume || '-'}
-                      </span>
-                    </td>
-                    <td className="py-5 px-6">
-                      {product.best_selling ? (
-                        <div className="flex items-center gap-1.5 text-[#B8860B] bg-[#FDFBF7] border border-[#C5A059]/30 px-3 py-1.5 rounded-lg text-xs font-bold w-fit">
-                          <Star size={14} className="fill-[#C5A059] text-[#C5A059]" />
-                          <span>أكثر مبيعاً</span>
-                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards View */}
+            <div className="md:hidden flex flex-col divide-y divide-[#E8E2D9]">
+              {products.map((product: any) => (
+                <div key={product.id} className="p-4 bg-white flex flex-col gap-3">
+                  <div className="flex gap-4">
+                    <div className="relative w-20 h-24 bg-[#FDFBF7] rounded-xl overflow-hidden flex-shrink-0 border border-[#E8E2D9]">
+                      {product.images && product.images[0] ? (
+                        <Image 
+                          src={product.images[0]} 
+                          alt={product.name_ar} 
+                          fill 
+                          className="object-cover"
+                        />
                       ) : (
-                        <div className="flex items-center gap-1.5 text-[#8C8374] bg-[#FDFBF7] border border-[#E8E2D9] px-3 py-1.5 rounded-lg text-xs font-bold w-fit">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#D6D0C4]"></div>
-                          <span>عادي</span>
+                        <div className="w-full h-full flex flex-col items-center justify-center text-[#D6D0C4]">
+                          <Box size={24} strokeWidth={1.5} />
                         </div>
                       )}
-                    </td>
-                    <td className="py-5 px-6 text-left">
-                      <div className="flex items-center justify-end gap-3 opacity-70 group-hover:opacity-100 transition-opacity">
-                        <Link 
-                          href={`/admin/products/${product.id}/edit`}
-                          className="flex items-center justify-center w-9 h-9 bg-white border border-[#E8E2D9] text-[#5C6B61] hover:text-main hover:border-main hover:bg-[#FDFBF7] rounded-lg transition-all shadow-sm"
-                          title="تعديل"
-                        >
-                          <Edit size={16} strokeWidth={2} />
-                        </Link>
-                        <DeleteButton id={product.id} />
+                    </div>
+                    
+                    <div className="flex-1 flex flex-col justify-between py-1">
+                      <div>
+                        <h3 className="font-bold text-sm text-[#2A3B32]">{product.name_ar}</h3>
+                        <p className="text-xs text-[#8C8374] mt-0.5 font-medium" dir="ltr">{product.name_en || '-'}</p>
                       </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {product.category && product.category.length > 0 && (
+                          <span className="text-[9px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-[#FDFBF7]">
+                            {product.category[0]}
+                          </span>
+                        )}
+                        {product.volume && (
+                          <span className="text-[9px] text-[#5C6B61] border border-[#E8E2D9] px-2 py-0.5 rounded bg-[#FDFBF7]" dir="ltr">
+                            {product.volume}
+                          </span>
+                        )}
+                        {product.best_selling && (
+                          <span className="flex items-center gap-1 text-[9px] text-[#B8860B] border border-[#C5A059]/30 px-2 py-0.5 rounded bg-[#FDFBF7]">
+                            <Star size={9} className="fill-[#C5A059] text-[#C5A059]" />
+                            أكثر مبيعاً
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end gap-2 mt-1">
+                    <Link 
+                      href={`/admin/products/${product.id}/edit`}
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-[#FDFBF7] border border-[#E8E2D9] text-[#5C6B61] rounded-lg text-xs font-bold active:bg-[#E8E2D9]"
+                    >
+                      <Edit size={14} strokeWidth={2} />
+                      تعديل
+                    </Link>
+                    <DeleteButton id={product.id} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
       

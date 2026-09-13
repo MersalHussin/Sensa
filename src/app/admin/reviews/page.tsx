@@ -101,81 +101,144 @@ export default function AdminReviewsPage() {
             <p className="text-[#8C8374] font-bold text-lg">لا توجد تقييمات حالياً</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-right text-[#2A3B32] border-collapse">
-              <thead>
-                <tr className="bg-[#FDFBF7] border-b border-[#E8E2D9]">
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[200px]">العميل / التاريخ</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[120px]">التقييم</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[120px]">الحالة</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الرأي</th>
-                  <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider text-left w-[200px]">الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E8E2D9]">
-                {reviews.map((review) => (
-                  <tr key={review.id} className={`hover:bg-[#FDFBF7]/60 transition-colors group align-top ${updatingId === review.id ? 'opacity-50 pointer-events-none' : ''}`}>
-                    <td className="py-5 px-6">
-                      <div className="font-bold text-sm text-[#2A3B32] mb-1.5">{review.name}</div>
-                      <Link href={`/products/${review.product_id}`} target="_blank" className="text-[10px] font-bold text-[#C5A059] hover:text-main uppercase tracking-widest border-b border-transparent hover:border-[#C5A059] transition-colors block mb-2 w-fit">
-                        المنتج: {review.product_id.substring(0, 8)}...
-                      </Link>
-                      <div className="text-[10px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-white w-fit" dir="ltr">
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-right text-[#2A3B32] border-collapse">
+                <thead>
+                  <tr className="bg-[#FDFBF7] border-b border-[#E8E2D9]">
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[200px]">العميل / التاريخ</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[120px]">التقييم</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider w-[120px]">الحالة</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider">الرأي</th>
+                    <th className="py-5 px-6 text-[11px] font-bold text-[#8C8374] uppercase tracking-wider text-left w-[200px]">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E8E2D9]">
+                  {reviews.map((review) => (
+                    <tr key={review.id} className={`hover:bg-[#FDFBF7]/60 transition-colors group align-top ${updatingId === review.id ? 'opacity-50 pointer-events-none' : ''}`}>
+                      <td className="py-5 px-6">
+                        <div className="font-bold text-sm text-[#2A3B32] mb-1.5">{review.name}</div>
+                        <Link href={`/products/${review.product_id}`} target="_blank" className="text-[10px] font-bold text-[#C5A059] hover:text-main uppercase tracking-widest border-b border-transparent hover:border-[#C5A059] transition-colors block mb-2 w-fit">
+                          المنتج: {review.product_id.substring(0, 8)}...
+                        </Link>
+                        <div className="text-[10px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-white w-fit" dir="ltr">
+                          {new Date(review.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
+                        </div>
+                      </td>
+                      
+                      <td className="py-5 px-6">
+                        <div className="flex gap-1 text-[#C5A059]">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-[#E8E2D9]" : ""} />
+                          ))}
+                        </div>
+                      </td>
+                      
+                      <td className="py-5 px-6">
+                        {getStatusBadge(review.status)}
+                      </td>
+                      
+                      <td className="py-5 px-6">
+                        <div className="text-xs text-[#5C6B61] leading-relaxed bg-[#FDFBF7] p-3 rounded-xl border border-[#E8E2D9] max-h-[100px] overflow-y-auto">
+                          {review.comment}
+                        </div>
+                      </td>
+                      
+                      <td className="py-5 px-6 text-left">
+                        <div className="flex flex-col gap-2 opacity-80 group-hover:opacity-100 transition-opacity items-end">
+                          {review.status !== 'accepted' && (
+                            <button 
+                              onClick={() => handleUpdateStatus(review.id, 'accepted')}
+                              className="text-[10px] font-bold text-main uppercase tracking-widest border border-main hover:bg-main hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
+                            >
+                              <Check size={12} /> قبول
+                            </button>
+                          )}
+                          {review.status !== 'rejected' && (
+                            <button 
+                              onClick={() => handleUpdateStatus(review.id, 'rejected')}
+                              className="text-[10px] font-bold text-[#B44C4C] uppercase tracking-widest border border-[#B44C4C] hover:bg-[#B44C4C] hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
+                            >
+                              <X size={12} /> رفض
+                            </button>
+                          )}
+                          {review.status !== 'paused' && review.status === 'accepted' && (
+                            <button 
+                              onClick={() => handleUpdateStatus(review.id, 'paused')}
+                              className="text-[10px] font-bold text-[#C5A059] uppercase tracking-widest border border-[#C5A059] hover:bg-[#C5A059] hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
+                            >
+                              <Pause size={12} /> إيقاف
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards View */}
+            <div className="md:hidden flex flex-col divide-y divide-[#E8E2D9]">
+              {reviews.map((review) => (
+                <div key={review.id} className={`p-4 bg-white flex flex-col gap-3 relative ${updatingId === review.id ? 'opacity-50 pointer-events-none' : ''}`}>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="font-bold text-sm text-[#2A3B32] mb-1">{review.name}</div>
+                      <div className="text-[9px] uppercase tracking-widest text-[#8C8374] font-bold border border-[#E8E2D9] px-2 py-0.5 rounded bg-[#FDFBF7] w-fit" dir="ltr">
                         {new Date(review.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </div>
-                    </td>
-                    
-                    <td className="py-5 px-6">
-                      <div className="flex gap-1 text-[#C5A059]">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-[#E8E2D9]" : ""} />
-                        ))}
-                      </div>
-                    </td>
-                    
-                    <td className="py-5 px-6">
+                    </div>
+                    <div>
                       {getStatusBadge(review.status)}
-                    </td>
-                    
-                    <td className="py-5 px-6">
-                      <div className="text-xs text-[#5C6B61] leading-relaxed bg-[#FDFBF7] p-3 rounded-xl border border-[#E8E2D9] max-h-[100px] overflow-y-auto">
-                        {review.comment}
-                      </div>
-                    </td>
-                    
-                    <td className="py-5 px-6 text-left">
-                      <div className="flex flex-col gap-2 opacity-80 group-hover:opacity-100 transition-opacity items-end">
-                        {review.status !== 'accepted' && (
-                          <button 
-                            onClick={() => handleUpdateStatus(review.id, 'accepted')}
-                            className="text-[10px] font-bold text-main uppercase tracking-widest border border-main hover:bg-main hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
-                          >
-                            <Check size={12} /> قبول
-                          </button>
-                        )}
-                        {review.status !== 'rejected' && (
-                          <button 
-                            onClick={() => handleUpdateStatus(review.id, 'rejected')}
-                            className="text-[10px] font-bold text-[#B44C4C] uppercase tracking-widest border border-[#B44C4C] hover:bg-[#B44C4C] hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
-                          >
-                            <X size={12} /> رفض
-                          </button>
-                        )}
-                        {review.status !== 'paused' && review.status === 'accepted' && (
-                          <button 
-                            onClick={() => handleUpdateStatus(review.id, 'paused')}
-                            className="text-[10px] font-bold text-[#C5A059] uppercase tracking-widest border border-[#C5A059] hover:bg-[#C5A059] hover:text-white px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 w-24"
-                          >
-                            <Pause size={12} /> إيقاف
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    </div>
+                  </div>
+
+                  <Link href={`/products/${review.product_id}`} target="_blank" className="text-[10px] font-bold text-[#5C6B61] hover:text-main uppercase tracking-widest bg-[#FDFBF7] border border-[#E8E2D9] px-2 py-1 rounded inline-block w-fit">
+                    المنتج: {review.product_id.substring(0, 8)}...
+                  </Link>
+                  
+                  <div className="flex gap-1 text-[#C5A059]">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={12} fill={i < review.rating ? "currentColor" : "none"} className={i >= review.rating ? "text-[#E8E2D9]" : ""} />
+                    ))}
+                  </div>
+
+                  <div className="text-xs text-[#5C6B61] leading-relaxed bg-[#FDFBF7] p-3 rounded-xl border border-[#E8E2D9] max-h-[100px] overflow-y-auto">
+                    {review.comment}
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2 justify-end mt-1">
+                    {review.status !== 'accepted' && (
+                      <button 
+                        onClick={() => handleUpdateStatus(review.id, 'accepted')}
+                        className="text-[10px] font-bold text-main uppercase tracking-widest border border-main px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 flex-1 shadow-sm active:bg-main active:text-white"
+                      >
+                        <Check size={12} /> قبول
+                      </button>
+                    )}
+                    {review.status !== 'rejected' && (
+                      <button 
+                        onClick={() => handleUpdateStatus(review.id, 'rejected')}
+                        className="text-[10px] font-bold text-[#B44C4C] uppercase tracking-widest border border-[#B44C4C] px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 flex-1 shadow-sm active:bg-[#B44C4C] active:text-white"
+                      >
+                        <X size={12} /> رفض
+                      </button>
+                    )}
+                    {review.status !== 'paused' && review.status === 'accepted' && (
+                      <button 
+                        onClick={() => handleUpdateStatus(review.id, 'paused')}
+                        className="text-[10px] font-bold text-[#C5A059] uppercase tracking-widest border border-[#C5A059] px-3 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 flex-1 shadow-sm active:bg-[#C5A059] active:text-white"
+                      >
+                        <Pause size={12} /> إيقاف
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
